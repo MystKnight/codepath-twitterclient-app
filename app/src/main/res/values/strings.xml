@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Twitter Client</string>
+    <string name="app_name">Home</string>
     <string name="login_label">Connect to Twitter</string>
-    <string name="title_activity_timeline">Home Timeline</string>
+    <string name="title_activity_timeline">Home</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="action_create">Compose</string>
+    <string name="title_activity_tweet_detail">TweetDetailActivity</string>
     <string name="action_settings">Settings</string>
+
+    <string name="tweet">Tweet</string>
+    <string name="no_internet">Internet Unavailable</string>
+    <string name="error_tweet_length">Make sure you are not over the 140 character limit before tweeting.</string>
+    <string name="error_tweeting">Failed to Tweet. Please try again later.</string>
+    <string name="error_empty_tweet">You must fill out the tweet message before tweeting.</string>
+    <string name="fail_favorite">Failed to Favorite. Please try again later.</string>
+    <string name="fail_retweet">Failed to Retweet. Please try again later.</string>
+    <string name="fail_user_info">Failed to get user information. Please try again later.</string>
+    <string name="fail_fetch_timeline">Failed to get your timeline. Please try again later.</string>
 
 </resources>

@@ -1,10 +1,11 @@
-package com.codepath.apps.twitter;
+package com.codepath.apps.twitter.network;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -34,13 +35,64 @@ public class TwitterClient extends OAuthBaseClient {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
-	public void getTimeline(AsyncHttpResponseHandler handler) {
+	public void getUserInfo(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+
+		client.get(apiUrl, null, handler);
+	}
+
+	public void getTimeline(long since_id, long max_id, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
-		params.put("since_id", 1);
+		if (since_id != -1) {
+			params.put("since_id", since_id);
+		}
+
+		if (max_id != -1) {
+			params.put("max_id", max_id);
+		}
 
 		client.get(apiUrl, params, handler);
+	}
+
+	public void updateStatus(String tweet, AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("status", tweet);
+
+		this.updateStatusHelper(params, handler);
+	}
+
+	public void reply(long replyToStatusId, String tweet, AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		// Make sure the username is part of the status
+		params.put("status", tweet);
+		params.put("in_reply_to_status_id", replyToStatusId);
+
+		this.updateStatusHelper(params, handler);
+	}
+
+	public void retweet(long tweetId, AsyncHttpResponseHandler handler) {
+		String constructUrl = String.format("statuses/retweet/%d.json", tweetId);
+		String apiUrl = getApiUrl(constructUrl);
+
+		Log.d("DEBUG retweet", apiUrl);
+
+		client.post(apiUrl, null, handler);
+	}
+
+	public void favorite(long tweetId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+
+		RequestParams params = new RequestParams();
+		params.put("id", tweetId);
+
+		client.post(apiUrl, params, handler);
+	}
+
+	private void updateStatusHelper(RequestParams params, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		client.post(apiUrl, params, handler);
 	}
 }

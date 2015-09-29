@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="light_gray">#CCCCCC</color>
+    <color name="very_light_gray">#EAEAEA</color>
+    <color name="blue_accent">#448AFF</color>
+    <color name="blue_twitter">#55ACEE</color>
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_reply"
+        android:drawableLeft="@drawable/ic_action_reply"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-8dp"
+        android:onClick="onReply"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:background="@color/white"
+        style="?android:attr/borderlessButtonStyle" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_retweet"
+        android:text="2"
+        android:textSize="12sp"
+        android:textColor="@color/light_gray"
+        android:drawableLeft="@drawable/ic_action_retweet"
+        android:layout_alignTop="@id/btn_reply"
+        android:layout_toRightOf="@id/btn_reply"
+        android:layout_marginLeft="40dp"
+        android:onClick="onRetweet"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:background="@color/white"
+        style="?android:attr/borderlessButtonStyle" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_favorite"
+        android:drawableLeft="@drawable/ic_action_favorite"
+        android:text="3"
+        android:textSize="12sp"
+        android:textColor="@color/light_gray"
+        android:layout_alignTop="@id/btn_reply"
+        android:layout_toRightOf="@id/btn_reply"
+        android:layout_marginLeft="120dp"
+        android:onClick="onFavorite"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:background="@color/white"
+        style="?android:attr/borderlessButtonStyle" />
+</RelativeLayout>
