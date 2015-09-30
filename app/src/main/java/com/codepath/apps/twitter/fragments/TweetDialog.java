@@ -143,7 +143,7 @@ public class TweetDialog extends DialogFragment {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         // Call out to our activity listener
-                        TweetDialogListener listener = (TweetDialogListener) getActivity();
+                        TweetDialogListener listener = (TweetDialogListener)getActivity();
                         listener.onFinishDialog();
 
                         Log.d("DEBUG", response.toString());

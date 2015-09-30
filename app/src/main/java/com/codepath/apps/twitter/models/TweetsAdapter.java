@@ -8,9 +8,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.twitter.R;
+import com.codepath.apps.twitter.network.TwitterApplication;
+import com.codepath.apps.twitter.network.TwitterClient;
+import com.codepath.apps.twitter.utils.Utils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
+
+import org.apache.http.Header;
 
 import java.util.List;
 
@@ -19,8 +26,11 @@ import java.util.List;
  */
 public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
+    Context context;
+
     public TweetsAdapter(Context context, List<Tweet> tweets) {
         super(context, 0, tweets);
+        this.context = context;
     }
 
     // Todo: ViewHolder pattern

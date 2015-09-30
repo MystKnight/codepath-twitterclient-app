@@ -156,6 +156,16 @@ public class Tweet extends Model implements Parcelable {
         return Utils.getSmartDate(date.getTime());
     }
 
+    public void setRetweeted(Boolean retweeted) {
+        this.retweeted = retweeted;
+        this.save();
+    }
+
+    public void setFavorited(Boolean favorited) {
+        this.favorited = favorited;
+        this.save();
+    }
+
     @Override
     public int describeContents() {
         return 0;

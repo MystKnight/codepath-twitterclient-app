@@ -37,4 +37,6 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.1'
     compile files('libs/org.apache.http.legacy.jar')
     compile 'com.makeramen:roundedimageview:2.2.0'
+    compile 'com.android.support:design:23.0.0'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }
