@@ -51,7 +51,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Fragments were a bit tricky. Trying to refactor the fragments so they can be re-usable and clean requires additional todo with custom views and listeners. Profile view page is just getting started and doesn't have all the child fragments within the screen yet.
 
 ## Open-source libraries used
 
