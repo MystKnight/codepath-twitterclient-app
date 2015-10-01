@@ -28,12 +28,17 @@ import java.util.List;
  */
 public class MentionsFragment extends TweetsListFragment {
 
+    private final String TYPE = "mentions";
     private TwitterClient client;
     private Boolean requiresClearingAdapter = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Load offline content by default
+        clear();
+        addAll(Tweet.getTweetByType(this.TYPE));
 
         // Make the initial network call to populate the timeline
         this.client = TwitterApplication.getRestClient();
@@ -81,13 +86,13 @@ public class MentionsFragment extends TweetsListFragment {
                     // We've just cleared so let's reset
                     requiresClearingAdapter = false;
                     // Clear our cached data
-                    Tweet.clearTweets();
+                    Tweet.clearTweetsByType(TYPE);
                     // Clear the adapter
                     clear();
                 }
 
                 // Process the tweets and add it to our adapter
-                List<Tweet> tweets = Tweet.fromJSONArray(response);
+                List<Tweet> tweets = Tweet.fromJSONArray(response, TYPE);
                 // Add the tweets and hide the refresh button
                 addAll(tweets);
                 // Reset the swipe refresh bar if it is in progress

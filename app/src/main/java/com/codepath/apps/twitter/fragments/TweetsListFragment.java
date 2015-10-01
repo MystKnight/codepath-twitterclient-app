@@ -18,6 +18,7 @@ import com.codepath.apps.twitter.models.TweetsAdapter;
 import com.codepath.apps.twitter.network.TwitterApplication;
 import com.codepath.apps.twitter.network.TwitterClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,7 +69,7 @@ public class TweetsListFragment extends TweetActionFragment {
         super.onCreate(savedInstanceState);
 
         // Attempt to fetch tweets from our offline storage
-        this.tweets = Tweet.getTweets();
+        this.tweets = new ArrayList<>();
         this.tweetsAdapter = new TweetsAdapter(getActivity(), this.tweets);
     }
 

@@ -113,6 +113,10 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         viewHolder.btnFavorite.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_favorite, 0, 0, 0);
         if (tweet.getFavorited()) {
             viewHolder.btnFavorite.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_favorite_pressed, 0, 0, 0);
+            // Looks like there is an inconsistency in the api where my post was favorited but favorite count is 0
+            if (tweet.getFavoriteCount() == 0) {
+                viewHolder.btnFavorite.setText("1");
+            }
         }
 
         // If the tweet is from the current user then you cannot retweet your own things
@@ -120,8 +124,15 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
         viewHolder.btnRetweet.setEnabled(true);
         if (tweet.getUser().getScreenName().equals("@onionpixel")) {
             viewHolder.btnRetweet.setEnabled(false);
+            // Force light gray since set enabled sets it to black
+            viewHolder.btnRetweet.setTextColor(this.context.getResources().getColor(R.color.light_gray));
             viewHolder.btnRetweet.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_retweet_disabled, 0, 0, 0);
-        } else if (tweet.getRetweeted()) {
+        }
+
+        // Make sure we don't highlight our own retweet
+        if (tweet.getRetweeted()) {
+            // We should be able to un-retweet
+            viewHolder.btnRetweet.setEnabled(true);
             viewHolder.btnRetweet.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_retweet_pressed, 0, 0, 0);
         }
 

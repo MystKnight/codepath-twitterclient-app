@@ -14,39 +14,43 @@ import com.codepath.apps.twitter.models.Tweet;
 import com.codepath.apps.twitter.network.TwitterApplication;
 import com.codepath.apps.twitter.network.TwitterClient;
 import com.codepath.apps.twitter.utils.EndlessScrollListener;
-import com.codepath.apps.twitter.utils.Utils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by yahuijin on 9/29/15.
+ * Created by yahuijin on 9/30/15.
  */
-public class TimelineFragment extends TweetsListFragment {
+public class UserTimelineFragment extends TweetsListFragment {
 
-    private final String TYPE = "timeline";
+    private final String TYPE = "usertimeline";
     private TwitterClient client;
-    private long sinceId = -1;
-    private long maxId = -1;
     private Boolean requiresClearingAdapter = true;
 
+    public static UserTimelineFragment newInstance(String screenName) {
+        UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
+
+        Bundle args = new Bundle();
+        args.putString("screen_name", screenName);
+        userTimelineFragment.setArguments(args);
+
+        return userTimelineFragment;
+    }
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Load offline content by default
         clear();
         addAll(Tweet.getTweetByType(this.TYPE));
 
-        // Make the initial network call to populate the timeline
         this.client = TwitterApplication.getRestClient();
-        this.populateTimeline();
+        this.populateUserTimeline();
     }
 
     @Nullable
@@ -60,7 +64,7 @@ public class TimelineFragment extends TweetsListFragment {
             public void onLoadMore(int page, int totalItemsCount) {
                 requiresClearingAdapter = false;
                 Log.d("DEBUG - LOAD MORE", Integer.toString(page));
-                populateTimeline();
+                populateUserTimeline();
             }
         });
 
@@ -69,21 +73,17 @@ public class TimelineFragment extends TweetsListFragment {
             @Override
             public void onRefresh() {
                 requiresClearingAdapter = true;
-                maxId = -1;
-                populateTimeline();
+                populateUserTimeline();
             }
         });
 
+        //View view = inflater.inflate(R.layout.fragment_profile, container, false);
         return view;
     }
 
-    private void populateTimeline() {
-        if (!Utils.isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), getResources().getString(R.string.no_internet), Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        this.client.getTimeline(this.sinceId, this.maxId, new JsonHttpResponseHandler() {
+    public void populateUserTimeline() {
+        String screenName = getArguments().getString("screen_name");
+        this.client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 // Got notified that we need to clear up our adapter
@@ -102,48 +102,13 @@ public class TimelineFragment extends TweetsListFragment {
                 addAll(tweets);
                 // Reset the swipe refresh bar if it is in progress
                 getSwipeContainer().setRefreshing(false);
-
-                // Set the max id so we are ready to paginate when we infinite scroll
-                setPaginateMaxId(tweets);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
                 getSwipeContainer().setRefreshing(false);
-                Toast.makeText(getActivity(), getResources().getString(R.string.fail_fetch_timeline), Toast.LENGTH_LONG).show();
-            }
+                Toast.makeText(getActivity(), getResources().getString(R.string.fail_fetch_usertimeline), Toast.LENGTH_LONG).show();            }
         });
-    }
-
-    private void setPaginateMaxId(List<Tweet> tweets) {
-        // Sort tweet ids and then grab the lowest id to paginate with
-        Collections.sort(tweets, new Comparator<Tweet>() {
-            @Override
-            public int compare(Tweet tweet, Tweet t1) {
-                if (tweet.getTweetId() < t1.getTweetId()) {
-                    return 0;
-                }
-
-                return 1;
-            }
-        });
-
-        // Set the max id so we can paginate correctly
-        if (tweets.size() > 0) {
-            // Get the last tweet
-            Tweet tweet = tweets.get(tweets.size() - 1);
-            this.maxId = tweet.getTweetId() - 1;
-        }
-    }
-
-    public void onFinishDialog() {
-        // Refresh when we close the dialog fragment
-        // Clear out the adapter so we can load in all new data
-        // Scroll up to the top of the table view to see what just got updated
-        getTweetListView().setSelectionAfterHeaderView();
-        this.requiresClearingAdapter = true;
-        this.maxId = -1;
-        this.populateTimeline();
     }
 }

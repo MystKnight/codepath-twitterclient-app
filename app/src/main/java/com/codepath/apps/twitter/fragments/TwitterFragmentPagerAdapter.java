@@ -40,9 +40,9 @@ public class TwitterFragmentPagerAdapter extends android.support.v4.app.Fragment
             }
             case 2: {
                 // Todo: Create a container fragment with child fragments to support real profile view
-                UserTimeFragment userTimeFragment = UserTimeFragment.newInstance("onionpixel");
-                this.fragments.put(position, userTimeFragment);
-                return userTimeFragment;
+                UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance("onionpixel");
+                this.fragments.put(position, userTimelineFragment);
+                return userTimelineFragment;
             }
             default: {
                 return null;

@@ -38,7 +38,7 @@ public class TweetActionFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 tweet.setRetweeted(true);
-                btnRetweet.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_favorite_pressed, 0, 0, 0);
+                btnRetweet.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_retweet_pressed, 0, 0, 0);
 
                 // Set the retweet text and icon on retweet
                 String retweetCountStr = btnRetweet.getText().toString();

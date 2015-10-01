@@ -32,6 +32,8 @@ public class Tweet extends Model implements Parcelable {
     private String text;
     @Column(name = "created_at")
     private String createdAt;
+    @Column(name = "type")
+    private String type;
     @Column(name = "retweet_count")
     private int retweetCount;
     @Column(name = "favorite_count")
@@ -49,7 +51,7 @@ public class Tweet extends Model implements Parcelable {
         super();
     }
 
-    public static Tweet fromJSON(JSONObject jsonObject) {
+    public static Tweet fromJSON(JSONObject jsonObject, String type) {
         Tweet tweet = new Tweet();
 
         try {
@@ -62,6 +64,7 @@ public class Tweet extends Model implements Parcelable {
             tweet.retweeted = jsonObject.getBoolean("retweeted");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+            tweet.type = type;
 
             // Check to see if we need to process a media asset
             JSONObject entities = jsonObject.getJSONObject("entities");
@@ -76,14 +79,14 @@ public class Tweet extends Model implements Parcelable {
         return tweet;
     }
 
-    public static List<Tweet> fromJSONArray(JSONArray jsonArray) {
+    public static List<Tweet> fromJSONArray(JSONArray jsonArray, String type) {
         List<Tweet> tweets = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 // Convert from json
                 JSONObject tweetJson = jsonArray.getJSONObject(i);
-                Tweet tweet = Tweet.fromJSON(tweetJson);
+                Tweet tweet = Tweet.fromJSON(tweetJson, type);
 
                 if (tweet != null) {
                     tweets.add(tweet);
@@ -102,9 +105,17 @@ public class Tweet extends Model implements Parcelable {
         return new Select().from(Tweet.class).execute();
     }
 
+    public static List<Tweet> getTweetByType(String type) {
+        return new Select().from(Tweet.class).where("type = ?", type).execute();
+    }
+
     public static void clearTweets() {
         // Delete and clear out tweets
         new Delete().from(Tweet.class).execute();
+    }
+
+    public static void clearTweetsByType(String type) {
+        new Delete().from(Tweet.class).where("type = ?", type).execute();
     }
 
     public long getTweetId() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Home</string>
+    <string name="app_name">Twitter</string>
     <string name="login_label">Connect to Twitter</string>
     <string name="title_activity_timeline">Home</string>
 
@@ -22,5 +22,6 @@
     <string name="fail_retweet">Failed to Retweet. Please try again later.</string>
     <string name="fail_user_info">Failed to get user information. Please try again later.</string>
     <string name="fail_fetch_timeline">Failed to get your timeline. Please try again later.</string>
+    <string name="fail_fetch_usertimeline">Failed to get your own timeline. Please try again later.</string>
 
 </resources>

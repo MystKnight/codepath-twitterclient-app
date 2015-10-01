@@ -1,15 +1,20 @@
 package com.codepath.apps.twitter.activities;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.codepath.apps.twitter.R;
+import com.codepath.apps.twitter.fragments.MentionsFragment;
+import com.codepath.apps.twitter.fragments.TimelineFragment;
+import com.codepath.apps.twitter.fragments.TweetDialog;
 import com.codepath.apps.twitter.fragments.TweetFragment;
 
-public class TweetDetailActivity extends AppCompatActivity {
+public class TweetDetailActivity extends AppCompatActivity implements TweetDialog.TweetDialogListener{
 
     TweetFragment tweetFragment;
 
@@ -42,6 +47,11 @@ public class TweetDetailActivity extends AppCompatActivity {
 
         getSupportActionBar().setCustomView(mCustomView);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
+    }
+
+    @Override
+    public void onFinishDialog() {
+        Log.d("DEBUG", "Finish Dialog called");
     }
 
     public void onReply(View view) {
