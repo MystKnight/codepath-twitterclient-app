@@ -19,6 +19,7 @@ import org.apache.http.Header;
  */
 public class TweetActionFragment extends Fragment {
 
+    // Todo: Refactor this into a custom view with listeners
     public void reply(Tweet tweet) {
         // Show compose dialog
         FragmentManager fm = getActivity().getSupportFragmentManager();

@@ -66,6 +66,16 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
+	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("screen_name", screenName);
+
+		client.get(apiUrl, params, handler);
+	}
+
 	public void updateStatus(String tweet, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("status", tweet);
@@ -85,9 +95,7 @@ public class TwitterClient extends OAuthBaseClient {
 	public void retweet(long tweetId, AsyncHttpResponseHandler handler) {
 		String constructUrl = String.format("statuses/retweet/%d.json", tweetId);
 		String apiUrl = getApiUrl(constructUrl);
-
-		Log.d("DEBUG retweet", apiUrl);
-
+        
 		client.post(apiUrl, null, handler);
 	}
 

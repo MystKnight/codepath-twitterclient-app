@@ -13,6 +13,7 @@
     <string name="tweet">Tweet</string>
     <string name="home">Home</string>
     <string name="mentions">Mentions</string>
+    <string name="me">Me</string>
     <string name="no_internet">Internet Unavailable</string>
     <string name="error_tweet_length">Make sure you are not over the 140 character limit before tweeting.</string>
     <string name="error_tweeting">Failed to Tweet. Please try again later.</string>

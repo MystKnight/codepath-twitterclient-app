@@ -12,7 +12,7 @@ import com.codepath.apps.twitter.R;
  */
 public class TwitterFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
 
-    private final int PAGE_COUNT = 2;
+    private final int PAGE_COUNT = 3;
     private String tabTitles[];
     private SparseArray<Fragment> fragments = new SparseArray<>();
 
@@ -20,7 +20,8 @@ public class TwitterFragmentPagerAdapter extends android.support.v4.app.Fragment
         super(fm);
         this.tabTitles = new String[] {
                 context.getResources().getString(R.string.home),
-                String.format("@%s", context.getResources().getString(R.string.mentions))
+                String.format("@%s", context.getResources().getString(R.string.mentions)),
+                context.getResources().getString(R.string.me)
         };
     }
 
@@ -35,7 +36,13 @@ public class TwitterFragmentPagerAdapter extends android.support.v4.app.Fragment
             case 1: {
                 MentionsFragment mentionsFragment = new MentionsFragment();
                 this.fragments.put(position, mentionsFragment);
-                return new MentionsFragment();
+                return mentionsFragment;
+            }
+            case 2: {
+                // Todo: Create a container fragment with child fragments to support real profile view
+                UserTimeFragment userTimeFragment = UserTimeFragment.newInstance("onionpixel");
+                this.fragments.put(position, userTimeFragment);
+                return userTimeFragment;
             }
             default: {
                 return null;

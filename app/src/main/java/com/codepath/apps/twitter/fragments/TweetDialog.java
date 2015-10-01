@@ -30,8 +30,6 @@ import com.squareup.picasso.Picasso;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 
 /**
